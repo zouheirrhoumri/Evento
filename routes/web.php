@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrganisateurController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +30,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/admin/dashboard', [ProfileController::class, 'edit'])->name('profile.edit');
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('profile.edit');
+});
+
+
+Route::middleware(['auth', 'role:organisateur'])->group(function () {
+    Route::get('/organisation/dashboard', [OrganisateurController::class, 'organisationDashboard'])->name('profile.edit');
+});
+
+
+require __DIR__ . '/auth.php';
