@@ -16,7 +16,7 @@ class EventController extends Controller
     {
         $categories = Category::all();
         $events = Event::all();
-        return view('events.index', compact('events', 'categories'));
+        return view('organisation.organisationDashboard', compact('events', 'categories'));
     }
     public function create()
     {
