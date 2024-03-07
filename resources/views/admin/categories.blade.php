@@ -83,25 +83,34 @@
                     </div>
                 </div>
             </div>
+           
         </header>
         <div class="mt-32 py-8">
+            <h1 class="text-black text-lg ml-6">+ ADD CATEGORY</h1>
+            <a href="{{ route('categories.create') }}">
+            <button type="button"
+                class="text-white ml-8  bg-blue-700 hover:bg-blue-800 focus:ring-4
+                 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-6 mt-4
+                  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none
+                   dark:focus:ring-blue-800">Add Category</button>
+                </a>
             <h1 class="text-black text-lg ml-6">ALL CATEGORIES</h1>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    @foreach ( $categories as $category )
-
-                <ul role="list" class=" grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <li class="col-span-1 bg-grey-300 rounded-lg shadow divide-y divide-gray-200">
-                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                            <div class="flex-1 truncate">
-                                <div class="flex items-center space-x-3">
-                                    <h3 class="text-gray-900 text-sm font-medium truncate">{{ $category->name }}</h3>
+                @foreach ($categories as $category)
+                    <ul role="list" class=" grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <li class="col-span-1 bg-grey-300 rounded-lg shadow divide-y divide-gray-200">
+                            <div class="w-full flex items-center justify-between p-6 space-x-6">
+                                <div class="flex-1 truncate">
+                                    <div class="flex items-center space-x-3">
+                                        <h3 class="text-gray-900 text-sm font-medium truncate">{{ $category->name }}
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
 
-                </ul>
+                    </ul>
                 @endforeach
             </div>
         </div>
