@@ -24,22 +24,23 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/f', function () {
+    return view('organisation.eventForm');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 Route::middleware(['auth', 'role:admin'])->group(function () {
-
-    Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('profile.edit');
+    Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
 });
-
 
 Route::middleware(['auth', 'role:organisateur'])->group(function () {
-    Route::get('/organisation/dashboard', [OrganisateurController::class, 'organisationDashboard'])->name('profile.edit');
+    Route::get('/organisation/dashboard', [OrganisateurController::class, 'organisationDashboard'])->name('organisateur.dashboard');
+    Route::resource('organisation', OrganisateurController::class);
 });
-
 
 require __DIR__ . '/auth.php';
