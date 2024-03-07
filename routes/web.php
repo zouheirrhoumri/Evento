@@ -43,6 +43,9 @@ Route::middleware(['auth', 'role:organisateur'])->group(function () {
     Route::get('/organisation/dashboard', [OrganisateurController::class, 'organisationDashboard'])->name('organisateur.dashboard');
     Route::get('/eventForm', [EventController::class, 'create'])->name('event.form');
     Route::post('/eventCreate', [EventController::class, 'store'])->name('event.store');
+    Route::get('/events/{eventId}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::put('/events/{eventId}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 
 });
 

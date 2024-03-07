@@ -107,11 +107,10 @@
                     <p class="mt-6 text-lg leading-8 text-gray-600">Anim aute id magna aliqua ad ad non deserunt sunt.
                         Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
                     <div class="mt-10 flex items-center justify-center gap-x-6">
-                        <a href="#"
-                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get
-                            started</a>
-                        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span
-                                aria-hidden="true">→</span></a>
+                        <a href="/eventForm"
+                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Post
+                            an Event</a>
+
                     </div>
                 </div>
             </div>
@@ -121,16 +120,17 @@
                     style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
                 </div>
             </div>
+            <h1 class="ml-8 mb-6 font-black text-lg">MY EVENTS :</h1>
+
         </div>
         <section class="pt-20 lg:pt-[120px] pb-10 lg:pb-20 ">
             <div class="container">
 
-                <div class="flex flex-wrap -mx-4">
+                <div class="flex flex-wrap gap-2 mx-8">
                     @foreach ($events as $event)
-                        <div class="w-full md:w-1/2 xl:w-1/3 px-4">
+                        <div class="w-full md:w-1/2 xl:w-1/3 px-4 border-2 rounded-sm">
                             <div class="bg-white rounded-lg overflow-hidden mb-10">
-                                <img src="{{ asset('images/' . $event->image) }}" alt="{{ $event->title }}"
-                                   >
+                                <img src="{{ asset('images/' . $event->image) }}" alt="{{ $event->title }}">
                                 <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
                                     <h3>
                                         <a href="javascript:void(0)"
@@ -152,6 +152,15 @@
                                     <p class="text-base text-body-color leading-relaxed mb-7">
                                         {{ $event->description }}
                                     </p>
+                                    <p class="text-base text-body-color leading-relaxed mb-2">
+                                        Location : {{ $event->location }}
+                                    </p>
+                                    <p class="text-base text-body-color leading-relaxed mb-2">
+                                        Date : {{ $event->date }}
+                                    </p>
+                                    <p class="text-base text-body-color leading-relaxed mb-2">
+                                        available seats : {{ $event->available_places }}
+                                    </p>
                                     <a href="javascript:void(0)"
                                         class="
                             inline-block
@@ -159,14 +168,31 @@
                             px-7
                             border border-[#E5E7EB]
                             rounded-full
-                            text-base text-body-color
-                            font-medium
-                            hover:border-primary hover:bg-primary hover:text-white
-                            transition
-                            ">
-                                        View Details
+                            text-base text-body-color font-medium hover:border-primary 
+                            
+                            ">{{ $event->category->name }}
                                     </a>
                                 </div>
+
+                                @if (auth()->check() && auth()->user()->id === $event->user_id)
+                                    <div class="flex justify-end mt-4">
+                                        <a href="{{ route('events.edit', ['eventId' => $event->id]) }}"
+                                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                                            Modifier
+                                        </a>
+
+                                    </div>
+                                @endif
+
+                                @if(auth()->check() && auth()->user()->id === $event->user_id)
+                                <form method="POST" action="{{ route('events.destroy', ['event' => $event->id]) }}">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                      Supprimer
+                                  </button>
+                              </form>
+                              @endif
                             </div>
                         </div>
                     @endforeach

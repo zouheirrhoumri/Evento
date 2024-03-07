@@ -14,8 +14,12 @@ class EventController extends Controller
 
     public function index()
     {
+        $organizerId = Auth::id(); // Assuming you are using authentication
+
+        // Assuming you have a 'organizer_id' column in the events table
+        $events = Event::where('user_id', $organizerId)->get();
         $categories = Category::all();
-        $events = Event::all();
+
         return view('organisation.organisationDashboard', compact('events', 'categories'));
     }
     public function create()
@@ -53,7 +57,13 @@ class EventController extends Controller
         $event->user_id = Auth::id();
         $event->save();
 
-        return view('organisation.organisationDashboard');
+        // Fetch events associated with the organizer
+        $organizerId = Auth::id();
+        $events = Event::where('user_id', $organizerId)->get();
+
+        // Pass events and other necessary data to the view
+        $categories = Category::all();
+        return view('organisation.organisationDashboard', compact('events', 'categories'));
     }
 
 
@@ -167,5 +177,33 @@ class EventController extends Controller
         $events = Event::paginate(10); // Par exemple, récupérez les événements paginés
 
         return view('events.index', compact('events'));
+    }
+
+    public function edit($eventId)
+    {
+        $event = Event::findOrFail($eventId);
+        return view('organisation.eventEdit', compact('event'));
+    }
+
+    public function update(Request $request, $eventId)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'location' => 'required',
+            'date' => 'required|date',
+            'available_places' => 'required|integer|min:0',
+            // Ajoutez d'autres règles de validation selon vos besoins
+        ]);
+
+        $event = Event::findOrFail($eventId);
+
+        if (Auth::id() !== $event->user_id) {
+            return redirect()->route('organisateur.dashboard');
+        }
+
+        $event->update($request->all());
+
+        return redirect()->route('organisateur.dashboard');
     }
 }
