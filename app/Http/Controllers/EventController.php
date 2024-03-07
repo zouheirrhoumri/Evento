@@ -135,7 +135,7 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $event->delete();
 
-        return redirect()->route('events.index')->with('success', 'Événement supprimé avec succès.');
+        return redirect()->route('organisateur.dashboard')->with('success', 'Événement supprimé avec succès.');
     }
 
     public function search(Request $request)
