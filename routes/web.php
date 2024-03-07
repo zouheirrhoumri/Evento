@@ -35,10 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
 });
 
+// organisation
 Route::middleware(['auth', 'role:organisateur'])->group(function () {
     Route::get('/organisation/dashboard', [OrganisateurController::class, 'organisationDashboard'])->name('organisateur.dashboard');
     Route::get('/eventForm', [EventController::class, 'create'])->name('event.form');
