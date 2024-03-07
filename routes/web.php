@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrganisateurController;
 use App\Http\Controllers\ProfileController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
 // admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/categories', [CategoryController::class, 'index'])->name('categories');
 });
 
 // organisation
