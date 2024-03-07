@@ -23,7 +23,6 @@ class CategoryController extends Controller
     {
         return view('admin.categForm');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -52,7 +51,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+
+        return view('admin.categEdit', compact('category'));
     }
 
     /**
@@ -60,7 +60,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:categories,name,' . $category->id,
+            // Add any other validation rules as needed
+        ]);
+
+        $category->update([
+            'name' => $request->name,
+            // Update any other fields as needed
+        ]);
+
+        return redirect()->route('categories')->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -68,6 +78,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->route('categories')->with('success', 'Category deleted successfully.');
     }
 }

@@ -83,17 +83,18 @@
                     </div>
                 </div>
             </div>
-           
+
         </header>
         <div class="mt-32 py-8">
             <h1 class="text-black text-lg ml-6">+ ADD CATEGORY</h1>
             <a href="{{ route('categories.create') }}">
-            <button type="button"
-                class="text-white ml-8  bg-blue-700 hover:bg-blue-800 focus:ring-4
+                <button type="button"
+                    class="text-white ml-8  bg-blue-700 hover:bg-blue-800 focus:ring-4
                  focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-6 mt-4
                   dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none
-                   dark:focus:ring-blue-800">Add Category</button>
-                </a>
+                   dark:focus:ring-blue-800">Add
+                    Category</button>
+            </a>
             <h1 class="text-black text-lg ml-6">ALL CATEGORIES</h1>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -109,9 +110,25 @@
                                 </div>
                             </div>
                         </li>
+                        <form method="POST" action="{{ route('categories.destroy', ['category' => $category->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                Supprimer
+                            </button>
+                        </form>
 
+                        <div class="flex justify-end mt-4">
+                            <a href="{{ route('category.edit', ['category' => $category->id]) }}"
+                                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                                Modifier
+                            </a>
+
+                        </div>
                     </ul>
                 @endforeach
+
             </div>
         </div>
 
