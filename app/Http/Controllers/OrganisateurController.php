@@ -9,4 +9,5 @@ class OrganisateurController extends Controller
     public function organisationDashboard(){
         return view('organisation.organisationDashboard');
     }
+    
 }
