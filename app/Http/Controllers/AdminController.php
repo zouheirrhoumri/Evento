@@ -15,6 +15,29 @@ class AdminController extends Controller
         $organizationCount = User::where('role', 'organisateur')->count();
         $eventCount = Event::count();
         $categoryCount = Category::count();
-        return view('admin.adminDashboard' , compact('userCount', 'organizationCount', 'eventCount', 'categoryCount'));
+        return view('admin.adminDashboard', compact('userCount', 'organizationCount', 'eventCount', 'categoryCount'));
+    }
+    public function userTable()
+    {
+        $users = User::where('role', '!=', 'admin')->get();
+        return view('admin.userTable', compact('users'));
+    }
+
+    public function blockUser($userId)
+    {
+        $user = User::findOrFail($userId);
+        $user->status = 'blocked';
+        $user->save();
+
+        return redirect()->back()->with('success', 'User blocked successfully');
+    }
+
+    public function unblockUser($userId)
+    {
+        $user = User::findOrFail($userId);
+        $user->status = 'active';
+        $user->save();
+
+        return redirect()->back()->with('success', 'User unblocked successfully');
     }
 }

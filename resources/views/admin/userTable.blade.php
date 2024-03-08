@@ -33,8 +33,8 @@
                 </div>
                 <div class="hidden lg:flex lg:gap-x-12">
                     <a href="" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
-                    <a href="{{ route('categories') }}" class="text-sm font-semibold leading-6 text-gray-900">Manage Categories</a>
-                    <a href="{{ route('admin.user') }}" class="text-sm font-semibold leading-6 text-gray-900">Manage Users</a>
+                    <a href="/categories" class="text-sm font-semibold leading-6 text-gray-900">Manage Categories</a>
+                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Marketplace</a>
                     <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
                 </div>
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -83,56 +83,55 @@
                     </div>
                 </div>
             </div>
-        </header>
 
-        <div class="bg-gray-50 pt-12 mt-8 sm:pt-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                  EVENTO STATS
-                </h2>
-                <p class="mt-3 text-xl text-gray-500 sm:mt-4">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus repellat laudantium.
-                </p>
-              </div>
-            </div>
-            <div class="mt-10 pb-12 bg-white sm:pb-16">
-              <div class="relative">
-                <div class="absolute inset-0 h-1/2 bg-gray-50"></div>
-                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div class="max-w-4xl mx-auto">
-                    <dl class="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-3">
-                      <div class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
-                        <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                          Total users
-                        </dt>
-                        <dd class="order-1 text-5xl font-extrabold text-indigo-600">
-                          {{ $userCount }}
-                        </dd>
-                      </div>
-                      <div class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
-                        <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                          Total Orgazations
-                        </dt>
-                        <dd class="order-1 text-5xl font-extrabold text-indigo-600">
-                            {{ $organizationCount }}
-                        </dd>
-                      </div>
-                      <div class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
-                        <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                          Total Events
-                        </dt>
-                        <dd class="order-1 text-5xl font-extrabold text-indigo-600">
-                          {{ $eventCount }}
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-    </div>
+        </header>
+        <div class="shadow-lg rounded-lg overflow-hidden mx-4 mt-24 md:mx-10">
+            <table class="w-full table-fixed">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Name</th>
+                        <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Email</th>
+                        <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Role</th>
+                        <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    @foreach ($users as $user)
+                        <tr>
+                            <td class="py-4 px-6 border-b border-gray-200">{{ $user->name }}</td>
+                            <td class="py-4 px-6 border-b border-gray-200 truncate">{{ $user->email }}</td>
+                            <td class="py-4 px-6 border-b border-gray-200">{{ $user->role }}</td>
+                            <td class="py-4 px-6 border-b border-gray-200">
+                               
+                                @if ($user->status === 'active')
+                                    <form action="{{ route('blockUser', ['userId' => $user->id]) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        <button type="submit"
+                                            class="bg-red-500 text-white py-1 px-2 rounded-full text-xs">
+                                            Block
+                                        </button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('unblockUser', ['userId' => $user->id]) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        <button type="submit"
+                                            class="bg-green-500 text-white py-1 px-2 rounded-full text-xs">
+                                            Unblock
+                                        </button>
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+
+
+
+                    <!-- Add more rows here -->
+                </tbody>
+            </table>
+        </div>
 
 
 </body>

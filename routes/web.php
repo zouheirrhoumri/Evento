@@ -45,8 +45,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/categories/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
     Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-
-
+    Route::get('/admin/dashboard/users', [AdminController::class, 'userTable'])->name('admin.user');
+    Route::post('/block-user/{userId}', [AdminController::class, 'blockUser'])->name('blockUser');
+    Route::post('/unblock-user/{userId}', [AdminController::class, 'unblockUser'])->name('unblockUser');
 });
 
 // organisation
@@ -57,7 +58,6 @@ Route::middleware(['auth', 'role:organisateur'])->group(function () {
     Route::get('/events/{eventId}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('/events/{eventId}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
-
 });
 
 require __DIR__ . '/auth.php';
