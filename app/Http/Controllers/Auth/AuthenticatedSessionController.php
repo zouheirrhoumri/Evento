@@ -28,6 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if ($request->user()->isBlocked()) {
+            // Déconnecter l'utilisateur et rediriger avec un message d'erreur
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Votre compte est bloqué. Veuillez contacter l\'administrateur.');
+        }
+
         $url = '';
         if($request->user()->role === 'admin'){
             $url = 'admin/dashboard';
