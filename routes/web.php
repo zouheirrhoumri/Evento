@@ -48,8 +48,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard/users', [AdminController::class, 'userTable'])->name('admin.user');
     Route::post('/block-user/{userId}', [AdminController::class, 'blockUser'])->name('blockUser');
     Route::post('/unblock-user/{userId}', [AdminController::class, 'unblockUser'])->name('unblockUser');
+    Route::get('/admin/dashboard/users', [AdminController::class, 'userTable'])->name('admin.user');
+    Route::get('/admin/dashboard/events', [AdminController::class, 'showEvent'])->name('admin.event');
+    Route::put('/events/{event}/update-status', [AdminController::class, 'updateEventStatus'])->name('events.updateStatus');
 });
 
+//user
+Route::middleware(['auth', 'role:utilisateur'])->group(function () {
+    Route::get('/events', [EventController::class, 'userDashboard'])->name('events.index');
+    Route::post('/events/{eventId}/reserve', [EventController::class, 'reserve'])->name('events.reserve');
+});
 // organisation
 Route::middleware(['auth', 'role:organisateur'])->group(function () {
     Route::get('/organisation/dashboard', [OrganisateurController::class, 'organisationDashboard'])->name('organisateur.dashboard');

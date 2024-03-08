@@ -40,4 +40,19 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'User unblocked successfully');
     }
+
+    public function showEvent(){
+        $categories = Category::all();
+        $events = Event::all();
+        return view('admin.eventA', compact('events', 'categories'));
+
+    }
+
+    public function updateEventStatus($eventId)
+    {
+        $event = Event::findOrFail($eventId);
+        $event->update(['Status' => 'confirmed']);
+        return redirect()->route('admin.event')->with('success', 'Event status updated successfully.');
+    }
+
 }

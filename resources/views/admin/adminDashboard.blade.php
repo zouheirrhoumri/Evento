@@ -35,7 +35,7 @@
                     <a href="" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
                     <a href="{{ route('categories') }}" class="text-sm font-semibold leading-6 text-gray-900">Manage Categories</a>
                     <a href="{{ route('admin.user') }}" class="text-sm font-semibold leading-6 text-gray-900">Manage Users</a>
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
+                    <a href="{{ route('admin.event') }}" class="text-sm font-semibold leading-6 text-gray-900">Events</a>
                 </div>
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                     <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
