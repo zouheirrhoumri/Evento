@@ -38,9 +38,14 @@
                     <a href="{{ route('admin.event') }}" class="text-sm font-semibold leading-6 text-gray-900">Events</a>
                 </div>
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
-                            aria-hidden="true">&rarr;</span></a>
-                </div>
+                  <form method="POST" action="{{ route('logout') }}">
+                      @csrf
+          
+                      <button type="submit" class="text-sm font-semibold leading-6 text-gray-900">
+                          {{ __('Log Out') }}
+                      </button>
+                  </form>
+              </div>
             </nav>
             <!-- Mobile menu, show/hide based on menu open state. -->
             <div class="lg:hidden" role="dialog" aria-modal="true">
@@ -74,11 +79,15 @@
                                 <a href="#"
                                     class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
                             </div>
-                            <div class="py-6">
-                                <a href="#"
-                                    class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
-                                    in</a>
-                            </div>
+                            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                              <form method="POST" action="{{ route('logout') }}">
+                                  @csrf
+                      
+                                  <button type="submit" class="text-sm font-semibold leading-6 text-gray-900">
+                                      {{ __('Log Out') }}
+                                  </button>
+                              </form>
+                          </div>
                         </div>
                     </div>
                 </div>

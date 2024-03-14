@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use App\Models\Reservation;
 use App\Models\Category;
-
+use Illuminate\Http\RedirectResponse;
+use function Laravel\Prompts\search;
 
 class EventController extends Controller
 {
@@ -23,11 +24,30 @@ class EventController extends Controller
         return view('organisation.organisationDashboard', compact('events', 'categories'));
     }
 
-    public function userDashboard()
+    public function userDashboard(Request $request)
     {
-        $events = Event::where('Status', 'confirmed')->get();
+        $query = Event::query()->where('Status', 'confirmed');
 
-        return view('user.eventList', compact('events'));
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($subQuery) use ($search) {
+                $subQuery->where('title', 'like', "%$search%")
+                         ->orWhere('description', 'like', "%$search%");
+            });
+        }
+    
+        if ($request->filled('category') && $request->category != 'All') {
+            $category = $request->input('category');
+            $query->whereHas('category', function ($subQuery) use ($category) {
+                $subQuery->where('name', $category);
+            });
+        }
+        
+
+        $events = $query->paginate(6);
+        $categories = Category::all();
+
+        return view('user.eventList', compact('events', 'categories'));
     }
 
     public function create()
@@ -99,10 +119,8 @@ class EventController extends Controller
 
 
         if ($event->type_of_reservation === 'Automatique') {
-
             $reservation->status = 'valid';
         } else if ($event->type_of_reservation === 'par_confirmation') {
-
             $reservation->status = 'non valid';
         }
 
@@ -113,7 +131,26 @@ class EventController extends Controller
             $event->save();
         }
 
-        return redirect()->back()->with('success', 'Votre réservation a été enregistrée avec succès.');
+        $successMessage = 'Votre réservation a été enregistrée avec succès.';
+        if ($reservation->status === 'non valid') {
+            $successMessage = 'Votre demande de réservation a été enregistrée avec succès. Elle est en attente d\'approbation de l\'organisation.';
+        }
+
+        return redirect()->back()->with('success', $successMessage);
+    }
+
+    public function generateTicket($eventId)
+    {
+        $user = auth()->user();
+
+        $event = Event::findOrFail($eventId);
+
+        $reservation = Reservation::where('user_id', $user->id)
+            ->where('event_id', $eventId)
+            ->where('status', 'valid')
+            ->firstOrFail();
+
+        return view('user.tickets', compact('event', 'reservation'));
     }
 
     public function destroy($id)
@@ -126,11 +163,28 @@ class EventController extends Controller
 
     public function search(Request $request)
     {
-        $searchTerm = $request->input('searchTerm');
+        $query = Event::query()->where('Status', 'confirmed');
 
-        $events = Event::where('title', 'LIKE', "%{$searchTerm}%")->get();
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($subQuery) use ($search) {
+                $subQuery->where('title', 'like', "%$search%")
+                         ->orWhere('description', 'like', "%$search%");
+            });
+        }
+    
+        if ($request->filled('category') && $request->category != 'All') {
+            $category = $request->input('category');
+            $query->whereHas('category', function ($subQuery) use ($category) {
+                $subQuery->where('name', $category);
+            });
+        }
+        
 
-        return response()->json($events);
+        $events = $query->paginate(4);
+        $categories = Category::all();
+
+        return  view('user.eventList', compact('events', 'search', 'categories'));
     }
     public function filterByCategory(Request $request)
     {
@@ -141,29 +195,22 @@ class EventController extends Controller
         ]);
     }
 
-    // public function showReservationStatistics($eventId)
-    // {
-    //     $event = Event::findOrFail($eventId);
-
-    //     // Nombre total de réservations pour cet événement
-    //     $totalReservations = Reservation::where('event_id', $eventId)->count();
-
-    //     // Autres statistiques sur les réservations pour cet événement...
-
-    //     return view('events.reservation_statistics', [
-    //         'event' => $event,
-    //         'totalReservations' => $totalReservations,
-    //         // Passer d'autres statistiques à la vue si nécessaire
-    //     ]);
-    // }
-
-
-    public function paginate(Request $request)
+    public function showReservationStatistics($eventId)
     {
-        $events = Event::paginate(10); // Par exemple, récupérez les événements paginés
+        $event = Event::findOrFail($eventId);
 
-        return view('events.index', compact('events'));
+        // Nombre total de réservations pour cet événement
+        $totalReservations = Reservation::where('event_id', $eventId)->count();
+
+        // Autres statistiques sur les réservations pour cet événement...
+
+        return view('events.reservation_statistics', [
+            'event' => $event,
+            'totalReservations' => $totalReservations,
+            // Passer d'autres statistiques à la vue si nécessaire
+        ]);
     }
+
 
     public function edit($eventId)
     {

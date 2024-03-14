@@ -47,4 +47,12 @@ class User extends Authenticatable
     {
         return $this->status === 'blocked';
     }
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

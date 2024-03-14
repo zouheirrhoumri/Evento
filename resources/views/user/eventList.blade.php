@@ -11,79 +11,90 @@
 
 <body>
     <div class="bg-white">
-        <header class="absolute inset-x-0 top-0 z-50">
-            <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                <div class="flex lg:flex-1">
-                    <a href="#" class="-m-1.5 p-1.5">
-                        <span class="sr-only">Your Company</span>
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                            alt="">
-                    </a>
-                </div>
-                <div class="flex lg:hidden">
-                    <button type="button"
-                        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="hidden lg:flex lg:gap-x-12">
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Product</a>
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Features</a>
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Marketplace</a>
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
-                </div>
-                <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
-                            aria-hidden="true">&rarr;</span></a>
-                </div>
-            </nav>
-            <!-- Mobile menu, show/hide based on menu open state. -->
-            <div class="lg:hidden" role="dialog" aria-modal="true">
-                <!-- Background backdrop, show/hide based on slide-over state. -->
-                <div class="fixed inset-0 z-50"></div>
-                <div
-                    class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-                    <div class="flex items-center justify-between">
-                        <a href="#" class="-m-1.5 p-1.5">
-                            <span class="sr-only">Your Company</span>
-                            <img class="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
-                        </a>
-                        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-                            <span class="sr-only">Close menu</span>
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+        <nav class="bg-white shadow">
+            <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex px-2 lg:px-0">
+                        <div class="flex-shrink-0 flex items-center">
+                            <img class="block lg:hidden h-8 w-auto"
+                                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
+                            <img class="hidden lg:block h-8 w-auto"
+                                src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
+                                alt="Workflow">
+                        </div>
+                        <div class="hidden lg:ml-6 lg:flex lg:space-x-8">
+                            <a href="#"
+                                class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">Dashboard</a>
+                            <a href="#"
+                                class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">My Tickets</a>
+                           
+                        </div>
                     </div>
-                    <div class="mt-6 flow-root">
-                        <div class="-my-6 divide-y divide-gray-500/10">
-                            <div class="space-y-2 py-6">
-                                <a href="#"
-                                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Product</a>
-                                <a href="#"
-                                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
-                                <a href="#"
-                                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Marketplace</a>
-                                <a href="#"
-                                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
-                            </div>
-                            <div class="py-6">
-                                <a href="#"
-                                    class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
-                                    in</a>
+                    <div class="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end ">
+                        <div class="max-w-md w-full lg:max-w-xl flex items-center">
+                            <label for="search" class="sr-only">Search</label>
+                            <form action="{{ route('events.index') }}" method="GET" class="relative flex gap-2 items-center">
+                                
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" x-description="Heroicon name: solid/search"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <input value="{{ isset($search) ? $search : '' }}" name="search"
+                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    placeholder="Search" type="search">
+                                <select id="category" name="category" class="block w-full pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="All">All</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->name }}" {{ request('category') == $category->name ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit"
+                                class="w-4/6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg ml-2 text-sm px-3 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                Apply filter
+                                </button>
+                            </form>
+                            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                        
+                                    <button type="submit" class="text-sm font-semibold leading-6 text-gray-900">
+                                        {{ __('Log Out') }}
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
+
+                    <div class="flex items-center lg:hidden">
+                        <!-- Mobile menu button (You can keep this if you want, but it won't toggle anything without JavaScript) -->
+                        <button type="button"
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                            aria-controls="mobile-menu">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </header>
+            <!-- Mobile menu (You can keep this if you want, but it won't toggle anything without JavaScript) -->
+            <div id="mobile-menu" class="lg:hidden">
+                <div class="pt-2 pb-3 space-y-1">
+                    <a href="#" class="block pl-3 pr-4 py-2 text-base font-medium text-indigo-700">Dashboard</a>
+                    <a href="#" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-800">Team</a>
+                    <a href="#" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-800">Projects</a>
+                    <a href="#" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-800">Calendar</a>
+                </div>
+            </div>
+        </nav>
 
         @if (session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -100,134 +111,120 @@
             </div>
         @endif
 
-        <div class="relative isolate px-6 pt-14 lg:px-8">
-            <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-                aria-hidden="true">
-                <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-                    style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+
+        <section class=" ">
+
+            <div class="relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
+
+                <div class="absolute inset-0">
+                    <div class="bg-white h-1/3 sm:h-2/3"></div>
                 </div>
-            </div>
-            <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-                <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-                    <div
-                        class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                        Announcing our next round of funding. <a href="#"
-                            class="font-semibold text-indigo-600"><span class="absolute inset-0"
-                                aria-hidden="true"></span>Read more <span aria-hidden="true">&rarr;</span></a>
+                <div class="relative max-w-7xl mx-auto">
+                    <div class="text-center">
+                        <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
+                            From the blog
+                        </h2>
+                        <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus
+                            atque,
+                            ducimus sed.
+                        </p>
                     </div>
-                </div>
-                <div class="text-center">
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Data to enrich your online
-                        business</h1>
-                    <p class="mt-6 text-lg leading-8 text-gray-600">Anim aute id magna aliqua ad ad non deserunt sunt.
-                        Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
-                    <div class="mt-10 flex items-center justify-center gap-x-6">
-                        <a href="/eventForm"
-                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Post
-                            an Event</a>
 
-                    </div>
-                </div>
-            </div>
-            <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-                aria-hidden="true">
-                <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-                    style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
-                </div>
-            </div>
-            <h1 class="ml-8 mb-6 font-black text-lg">MY EVENTS :</h1>
-
-        </div>
-        <section class="pt-20 lg:pt-[120px] pb-10 lg:pb-20 ">
-            <div class="container">
-
-                <div class="flex flex-wrap gap-2 mx-8">
-                    @foreach ($events as $event)
-                        <div class="w-full md:w-1/2 xl:w-1/3 px-4 border-2 rounded-sm">
-                            <div class="bg-white rounded-lg overflow-hidden mb-10">
-                                <img src="{{ asset('images/' . $event->image) }}" alt="{{ $event->title }}">
-                                <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
-                                    <h3>
-                                        <a href="javascript:void(0)"
-                                            class="
-                               font-semibold
-                               text-dark text-xl
-                               sm:text-[22px]
-                               md:text-xl
-                               lg:text-[22px]
-                               xl:text-xl
-                               2xl:text-[22px]
-                               mb-4
-                               block
-                               hover:text-primary
-                               ">
-                                            {{ $event->title }}
-                                        </a>
-                                    </h3>
-                                    <p class="text-base text-body-color leading-relaxed mb-7">
-                                        {{ $event->description }}
-                                    </p>
-                                    <p class="text-base text-body-color leading-relaxed mb-2">
-                                        Location : {{ $event->location }}
-                                    </p>
-                                    <p class="text-base text-body-color leading-relaxed mb-2">
-                                        Date : {{ $event->date }}
-                                    </p>
-                                    <p class="text-base text-body-color leading-relaxed mb-2">
-                                        available seats : {{ $event->available_places }}
-                                    </p>
-                                    <a href="javascript:void(0)"
-                                        class="
-                            inline-block
-                            py-2
-                            px-7
-                            border border-[#E5E7EB]
-                            rounded-full
-                            text-base text-body-color font-medium hover:border-primary 
-                            
-                            ">{{ $event->category->name }}
-                                    </a>
+                    <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
+                        @foreach ($events as $event)
+                            <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+                                <div class="flex-shrink-0">
+                                    <img class="h-48 w-full object-cover"
+                                        src="{{ asset('images/' . $event->image) }}"
+                                        alt="">
                                 </div>
-
-                                @if (auth()->check() && auth()->user()->id === $event->user_id)
-                                    <div class="flex justify-end mt-4">
-                                        <a href="{{ route('events.edit', ['eventId' => $event->id]) }}"
-                                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                                            Modifier
+                                <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-indigo-600">
+                                            <a href="#" class="hover:underline">
+                                                {{ $event->category->name }}
+                                            </a>
+                                        </p>
+                                        <a href="#" class="block mt-2">
+                                            <p class="text-xl font-semibold text-gray-900">
+                                                {{ $event->title }}
+                                            </p>
+                                            <p class="mt-3 text-base text-gray-500">
+                                                {{ $event->description }}
+                                            </p>
                                         </a>
+                                    </div>
+                                    <div class="mt-4 flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">
+                                                Location: <span class="text-indigo-600">{{ $event->location }}</span>
+                                            </p>
+                                            <p class="text-sm font-medium text-gray-900">
+                                                Date: <span class="text-indigo-600">{{ $event->date }}</span>
+                                            </p>
+                                            <p class="text-sm font-medium text-gray-900">
+                                                Available Places: <span
+                                                    class="text-indigo-600">{{ $event->available_places }}</span>
+                                            </p>
+                                        </div>
+
+
 
                                     </div>
-                                @endif
-                                
-                                @if (auth()->check() && auth()->user()->role === 'utilisateur')
-                                    <form method="POST"
-                                        action="{{ route('events.reserve', ['eventId' => $event->id]) }}">
-                                        @csrf
-                                        <button
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            Réserver
-                                        </button>
-                                    </form>
-                                @endif
 
-                                @if (auth()->check() && auth()->user()->id === $event->user_id)
-                                    <form method="POST"
-                                        action="{{ route('events.destroy', ['event' => $event->id]) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                            Supprimer
-                                        </button>
-                                    </form>
-                                @endif
+                                    <div class="flex justify-between mt-4">
+                                        @if (auth()->check() && auth()->user()->id === $event->user_id)
+                                            <a href="{{ route('events.edit', ['eventId' => $event->id]) }}"
+                                                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                                                Modifier
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->check() && auth()->user()->role === 'utilisateur')
+                                            <form method="POST"
+                                                action="{{ route('events.reserve', ['eventId' => $event->id]) }}">
+                                                @csrf
+                                                <button
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                    Réserver
+                                                </button>
+                                            </form>
+                                        @endif
+
+                                        @if (auth()->check() && auth()->user()->role === 'utilisateur')
+                                            <form method="
+                                            POST"
+                                                action="{{ route('event.ticket', ['eventId' => $event->id]) }}">
+                                                @csrf
+                                                <button
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                   Get Ticket
+                                                </button>
+                                            </form>
+                                        @endif
+
+                                        @if (auth()->check() && auth()->user()->id === $event->user_id)
+                                            <form method="POST"
+                                                action="{{ route('events.destroy', ['event' => $event->id]) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                                    Supprimer
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+
                 </div>
-
-
             </div>
+
+            {{ $events->withQueryString()->links() }}
         </section>
     </div>
 

@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller
             $url = '/events';
         }
 
-        return redirect()->intended($url);
+        return redirect($url);
     }
 
     /**
@@ -57,6 +57,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

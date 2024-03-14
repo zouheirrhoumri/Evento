@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role'
+            'role' => ['required', 'in:admin,organisateur,utilisateur'],
         ]);
 
         $user = User::create([
@@ -47,7 +47,15 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        $url = '';
+        if($request->user()->role === 'admin'){
+            $url = 'admin/dashboard';
+        }elseif($request->user()->role === 'organisateur'){
+            $url = 'organisation/dashboard';
+        }elseif($request->user()->role === 'utilisateur'){
+            $url = '/events';
+        }
+        
+        return redirect($url);
     }
 }

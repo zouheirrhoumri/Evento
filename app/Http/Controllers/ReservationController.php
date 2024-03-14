@@ -1,65 +1,48 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Reservation;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // public function showNonValidReservations()
+    // {
+    //     $nonValidReservations = Reservation::where('status', 'non valid')->get();
+    //     return view('organisation.reservation', ['reservations' => $nonValidReservations]);
+    // }
+
+    public function showNonValidReservations()
     {
-        //
+        // Assuming you're fetching events created by the organization
+        $events = auth()->user()->events;
+
+        // Fetch only non-valid reservations related to each event
+        $nonValidReservations = collect();
+
+        foreach ($events as $event) {
+            $nonValidReservations = $nonValidReservations->merge(
+                $event->reservations->where('status', 'non valid')
+            );
+        }
+
+        return view('organisation.reservation', ['reservations' => $nonValidReservations]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function confirmReservation($eventId)
     {
-        //
-    }
+        $reservation = Reservation::findOrFail($eventId);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reservation $reservation)
-    {
-        //
-    }
+        $reservation->update(['status' => 'valid']);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reservation $reservation)
-    {
-        //
-    }
+        $event = Event::findOrFail($reservation->event_id);
+        $event->available_places -= 1;
+        $event->save();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
+        return redirect()->back()->with('success', 'Réservation confirmée avec succès.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
-    }
+    
+    
 }

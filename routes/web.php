@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrganisateurController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +58,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:utilisateur'])->group(function () {
     Route::get('/events', [EventController::class, 'userDashboard'])->name('events.index');
     Route::post('/events/{eventId}/reserve', [EventController::class, 'reserve'])->name('events.reserve');
+    Route::get('/events/{eventId}/ticket', [EventController::class, 'generateTicket'])->name('event.ticket');
+    Route::post('/events', [EventController::class , 'search'])->name('search.events');
 });
 // organisation
 Route::middleware(['auth', 'role:organisateur'])->group(function () {
@@ -66,6 +69,10 @@ Route::middleware(['auth', 'role:organisateur'])->group(function () {
     Route::get('/events/{eventId}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('/events/{eventId}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    Route::get('/reservations/non-valid', [ReservationController::class, 'showNonValidReservations'])->name('reservations.non-valid');  
+    Route::put('/admin/confirm-event/{eventId}', [ReservationController::class, 'confirmReservation'])->name('reservations.confirm');  
+
+
 });
 
 require __DIR__ . '/auth.php';
